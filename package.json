@@ -2,6 +2,7 @@
   "name": "global-ecommerce-dashboard",
   "private": true,
   "version": "0.0.1",
+  "homepage": "https://dalroy44.github.io/global-ecommerce-dashboard/",
   "type": "module",
   "scripts": {
     "dev": "vite",
