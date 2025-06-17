@@ -1,13 +1,22 @@
-
+// src/App.tsx
+import { Button } from './components/Button/Button'
+import { ThemeToggle } from './components/ThemeToggle'
 
 function App() {
-
   return (
-    <div className="flex items-center justify-center h-screen bg-gray-100">
-      <div className="bg-white p-6 rounded-lg shadow-lg">
-        <h1 className="text-2xl font-bold mb-4">Hello, World!</h1>
-        <p className="text-gray-700">This is a simple React app with Tailwind CSS.</p>
+    // Add dark mode background color
+    <div className="flex flex-col items-center justify-center h-screen bg-gray-100 dark:bg-gray-900 gap-4">
+      <div className="absolute top-4 right-4">
+        <ThemeToggle />
       </div>
+
+      <h1 className="text-2xl font-bold text-gray-900 dark:text-gray-100">
+        Global E-commerce Trends
+      </h1>
+
+      <Button onClick={() => alert('Clicked!')}>
+        Primary Button
+      </Button>
     </div>
   )
 }
