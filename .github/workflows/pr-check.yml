@@ -1,0 +1,42 @@
+# .github/workflows/pr-check.yml
+
+name: 'PR Check'
+
+# This workflow runs on any pull request targeting the main branch
+on:
+  pull_request:
+    branches: [main]
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
+
+jobs:
+  build-and-verify:
+    name: 'Build and Verify'
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: '1. Checkout Code'
+        uses: actions/checkout@v4
+
+      - name: '2. Setup Node.js'
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20.x'
+          # Use npm caching for faster installs
+          cache: 'npm'
+
+      - name: '3. Install Dependencies'
+        # Using 'npm ci' is faster and more secure than 'npm install' in CI environments
+        run: npm ci
+
+      - name: '4. Run Linter'
+        # Ensures all code follows our style guidelines
+        run: npm run lint
+
+      - name: '5. Run Production Build'
+        # Verifies that the project builds without TypeScript or other errors
+        run: npm run build
+
+      - name: '6. Build Storybook'
+        # Verifies that our component library also builds successfully
+        run: npm run build-storybook
