@@ -1,5 +1,10 @@
 // src/components/Button.stories.tsx
-import type { Meta, StoryObj } from '@storybook/react';
+// src/components/Button.stories.tsx
+
+// To this:
+import type { Meta, StoryObj } from '@storybook/react-vite';
+
+// ... (rest of the file is the same)
 import { Button } from './Button';
 
 // This default export determines where your story goes in the story list

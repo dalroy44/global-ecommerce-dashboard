@@ -1,34 +1,23 @@
 // src/context/ThemeContext.tsx
 
-import { createContext, useState, useEffect, type ReactNode } from 'react'
+import { useState, useEffect, type ReactNode } from 'react'
+import { ThemeContext, type Theme } from '../types/ThemeContext'
 
-type Theme = 'light' | 'dark'
-
-interface ThemeContextType {
-    theme: Theme
-    toggleTheme: () => void
-}
-
-// Create the context with a default value
-export const ThemeContext = createContext<ThemeContextType | undefined>(undefined)
-
+// The props interface remains the same
 interface ThemeProviderProps {
     children: ReactNode
 }
 
 export const ThemeProvider = ({ children }: ThemeProviderProps) => {
-    // 1. State to hold the current theme
+    // All the logic remains exactly the same
     const [theme, setTheme] = useState<Theme>(() => {
-        // 2. Check localStorage first
         const storedTheme = localStorage.getItem('theme') as Theme | null
         if (storedTheme) {
             return storedTheme
         }
-        // 3. Fallback to user's system preference
         return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'
     })
 
-    // 4. Effect to apply the theme class and save to localStorage
     useEffect(() => {
         const root = window.document.documentElement
         root.classList.remove('light', 'dark')
@@ -40,9 +29,12 @@ export const ThemeProvider = ({ children }: ThemeProviderProps) => {
         setTheme(prevTheme => (prevTheme === 'light' ? 'dark' : 'light'))
     }
 
+    // The provider now uses the imported ThemeContext
     return (
         <ThemeContext.Provider value={{ theme, toggleTheme }}>
             {children}
         </ThemeContext.Provider>
     )
 }
+
+export type { Theme }
