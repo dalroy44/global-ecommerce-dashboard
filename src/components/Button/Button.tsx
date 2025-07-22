@@ -1,17 +1,23 @@
-// src/components/Button.tsx
+import * as React from 'react'
+import { type VariantProps } from 'class-variance-authority'
+import { clsx } from 'clsx'
+import { buttonVariants } from './buttonVariants'
 
-import React from 'react'
-import './Button.scss' // Import the styles for this component
+export interface ButtonProps
+  extends React.ButtonHTMLAttributes<HTMLButtonElement>,
+    VariantProps<typeof buttonVariants> {}
 
-interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
-    children: React.ReactNode
-}
-
-export const Button = ({ children, ...props }: ButtonProps) => {
-    // Notice how clean the JSX is!
+const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
+  ({ className, variant, size, ...props }, ref) => {
     return (
-        <button className="primary-button" {...props}>
-            {children}
-        </button>
+      <button
+        className={clsx(buttonVariants({ variant, size, className }))}
+        ref={ref}
+        {...props}
+      />
     )
-}
+  },
+)
+Button.displayName = 'Button'
+
+export { Button }
