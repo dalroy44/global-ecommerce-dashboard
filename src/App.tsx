@@ -1,4 +1,3 @@
-// src/App.tsx
 import { Button } from './components/Button/Button'
 import { ThemeToggle } from './components/ThemeToggle'
 
@@ -14,9 +13,24 @@ function App() {
         Global E-commerce Trends
       </h1>
 
-      <Button onClick={() => alert('Clicked!')}>
-        Primary Button
-      </Button>
+      <div className="flex gap-4">
+        <Button onClick={() => alert('Clicked!')}>Default</Button>
+        <Button onClick={() => alert('Clicked!')} variant="destructive">
+          Destructive
+        </Button>
+        <Button onClick={() => alert('Clicked!')} variant="outline">
+          Outline
+        </Button>
+        <Button onClick={() => alert('Clicked!')} variant="subtle">
+          Subtle
+        </Button>
+        <Button onClick={() => alert('Clicked!')} variant="ghost">
+          Ghost
+        </Button>
+        <Button onClick={() => alert('Clicked!')} variant="link">
+          Link
+        </Button>
+      </div>
     </div>
   )
 }
