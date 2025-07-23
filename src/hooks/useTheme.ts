@@ -1,5 +1,6 @@
 // src/hooks/useTheme.ts
 import { useContext } from 'react'
+
 import { ThemeContext } from '../types/ThemeContext'
 
 export const useTheme = () => {
