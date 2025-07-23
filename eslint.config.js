@@ -1,28 +1,79 @@
-// For more info, see https://github.com/storybookjs/eslint-plugin-storybook#configuration-flat-config-format
-import storybook from "eslint-plugin-storybook";
+import prettierConfig from "eslint-config-prettier";
+import pluginImport from "eslint-plugin-import";
+import pluginJsxA11y from "eslint-plugin-jsx-a11y";
+import pluginReact from "eslint-plugin-react";
+import pluginReactHooks from "eslint-plugin-react-hooks";
+import storybookPlugin from "eslint-plugin-storybook";
+import globals from "globals";
+import tseslint from "typescript-eslint";
 
-import js from '@eslint/js'
-import globals from 'globals'
-import reactHooks from 'eslint-plugin-react-hooks'
-import reactRefresh from 'eslint-plugin-react-refresh'
-import tseslint from 'typescript-eslint'
-
-export default tseslint.config({ ignores: ['dist'] }, {
-  extends: [js.configs.recommended, ...tseslint.configs.recommended],
-  files: ['**/*.{ts,tsx}'],
-  languageOptions: {
-    ecmaVersion: 2020,
-    globals: globals.browser,
+export default [
+  {
+    ignores: ["dist", "coverage"],
   },
-  plugins: {
-    'react-hooks': reactHooks,
-    'react-refresh': reactRefresh,
+  {
+    files: ["**/*.{js,mjs,cjs,ts,jsx,tsx}"],
+    plugins: {
+      react: pluginReact,
+      "react-hooks": pluginReactHooks,
+      import: pluginImport,
+      "jsx-a11y": pluginJsxA11y,
+      storybook: storybookPlugin,
+    },
+    languageOptions: {
+      globals: {
+        ...globals.browser,
+        ...globals.node,
+      },
+      parser: tseslint.parser,
+      parserOptions: {
+        ecmaFeatures: {
+          jsx: true,
+        },
+      },
+    },
+    rules: {
+      ...prettierConfig.rules,
+      ...pluginReactHooks.configs.recommended.rules,
+      // "import/order": [
+      //   "error",
+      //   {
+      //     groups: [
+      //       "builtin",
+      //       "external",
+      //       "internal",
+      //       "parent",
+      //       "sibling",
+      //       "index",
+      //       "object",
+      //       "type",
+      //     ],
+      //     pathGroups: [
+      //       {
+      //         pattern: "react",
+      //         group: "builtin",
+      //         position: "before",
+      //       },
+      //       {
+      //         pattern: "@/**",
+      //         group: "internal",
+      //       },
+      //     ],
+      //     pathGroupsExcludedImportTypes: ["react"],
+      //     "newlines-between": "always",
+      //     alphabetize: {
+      //       order: "asc",
+      //       caseInsensitive: true,
+      //     },
+      //   },
+      // ],
+    },
+    settings: {
+      "import/resolver": {
+        typescript: {},
+      },
+    },
   },
-  rules: {
-    ...reactHooks.configs.recommended.rules,
-    'react-refresh/only-export-components': [
-      'warn',
-      { allowConstantExport: true },
-    ],
-  },
-}, storybook.configs["flat/recommended"]);
+  ...tseslint.configs.recommended,
+  ...storybookPlugin.configs["flat/recommended"],
+];

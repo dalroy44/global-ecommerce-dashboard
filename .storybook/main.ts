@@ -1,6 +1,7 @@
 // .storybook/main.ts
-import type { StorybookConfig } from '@storybook/react-vite'
 import path from 'path' // Import path
+
+import type { StorybookConfig } from '@storybook/react-vite'
 
 const config: StorybookConfig = {
   stories: ['../src/**/*.mdx', '../src/**/*.stories.@(js|jsx|mjs|ts|tsx)'],

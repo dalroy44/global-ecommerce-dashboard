@@ -1,8 +1,9 @@
 // vite.config.ts
-import { defineConfig } from 'vite'
-import react from '@vitejs/plugin-react'
 import path from 'path'
+
 import { codecovVitePlugin } from '@codecov/vite-plugin'
+import react from '@vitejs/plugin-react'
+import { defineConfig } from 'vite'
 
 export default defineConfig({
   // 👇 ADD THIS 'base' PROPERTY 👇
@@ -11,7 +12,7 @@ export default defineConfig({
     react(),
     codecovVitePlugin({
       enableBundleAnalysis: process.env.CODECOV_TOKEN !== undefined,
-      bundleName: '<bundle project name>',
+      bundleName: 'global-ecommerce-dashboard',
       uploadToken: process.env.CODECOV_TOKEN,
     }),
   ],
